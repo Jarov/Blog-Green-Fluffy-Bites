@@ -1,5 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using Blog_GreenFluffyBites.Migrations;
+using Blog_GreenFluffyBites.Models;
+using Microsoft.Owin;
 using Owin;
+using System.Data.Entity;
 
 [assembly: OwinStartupAttribute(typeof(Blog_GreenFluffyBites.Startup))]
 namespace Blog_GreenFluffyBites
@@ -8,6 +11,8 @@ namespace Blog_GreenFluffyBites
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogDBContext, Configuration>());
+
             ConfigureAuth(app);
         }
     }

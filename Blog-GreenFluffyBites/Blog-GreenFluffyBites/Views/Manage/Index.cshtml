@@ -26,20 +26,13 @@
                 <dt>E-Mail:</dt>
                 <dd>
                     [                  
-                        @Html.ActionLink("Change your E-Mail", "ChangeEMail")
+                    @Html.ActionLink("Change your E-Mail", "ChangeEMail")
                     ]
                 </dd> 
                 <dt>Full Name:</dt>
                 <dd>
                     [
-                    @if (Model.HasFullName)
-                    {
-                        @Html.ActionLink("Change your Name", "ChangeFullName")
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Enter your Name", "SetFullName")
-                    }
+                    @Html.ActionLink("Change your Name", "ChangeFullName")
                     ]
                 </dd> 
             </dl>
