@@ -10,7 +10,7 @@ namespace Blog_GreenFluffyBites.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("List", "Article");
         }
 
     }

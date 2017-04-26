@@ -32,9 +32,9 @@ namespace Blog_GreenFluffyBites.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Blog_GreenFluffyBites.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-      
+
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
@@ -129,6 +129,8 @@ namespace Blog_GreenFluffyBites.Controllers
             AddErrors(result);
             return View(model);
         }
+
+   
 
         //
         // GET: /Manage/SetPassword
@@ -232,7 +234,7 @@ namespace Blog_GreenFluffyBites.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -283,6 +285,6 @@ namespace Blog_GreenFluffyBites.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

@@ -58,8 +58,5 @@ namespace Blog_GreenFluffyBites.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ChangeEmailViewModel
-    {
-
-    }
+    
 }
