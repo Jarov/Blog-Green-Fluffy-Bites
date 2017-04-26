@@ -17,7 +17,8 @@
         <small class="author">
             --author @Model.Author.FullName
         </small>
-        <footer class="pull-right">
+        <footer>
+            <div class="pull-right">
             @if (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.Name))
             {
                 @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
@@ -25,6 +26,10 @@
             }
 
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+                </div>
+            <div class="pull-left">
+                @Html.ActionLink("Like", "Details", "Article", null, new { @class = "btn btn-default btn-xs" })
+            </div>
         </footer>
     </article>
 </div>
