@@ -1,5 +1,6 @@
 ﻿@model Blog_GreenFluffyBites.Models.Article
-
+@using Blog_GreenFluffyBites.Models;
+@using System.Linq;
 @{
     ViewBag.Title = "Details";
 }
@@ -26,16 +27,25 @@
             }
 
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
-                </div>
+            </div>
             <div class="pull-left">
                 @*@Html.ActionLink("Like", "Article", "LikeArticle", new { sortOrder = ViewBag.ScoreSortParm })*@
-    @if (Request.IsAuthenticated)
-    {
-        using (Html.BeginForm("LikeArticle", "Article", new { @id = Model.Id }, FormMethod.Post))
-        {
-         <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-thumbs-up thumbs-up"></span> </button>
-        }
-    }
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LikeArticle", "Article", new { @id = Model.Id }, FormMethod.Post))
+                    {
+                        <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-thumbs-up thumbs-up"></span> </button>
+                    }
+                }
+                @using (var database = new BlogDBContext())
+                {
+                    var url = Request.Url.ToString().Split( new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                    var ArticleID = Convert.ToInt32(url.Last());
+
+                    var currentArticle = database.Articles.First(a => a.Id == ArticleID);
+
+                    <p>Score: @currentArticle.Score</p>
+                }
             </div>
         </footer>
     </article>

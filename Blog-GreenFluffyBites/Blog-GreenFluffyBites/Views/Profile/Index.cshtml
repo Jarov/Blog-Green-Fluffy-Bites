@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNet.Identity
+@using Blog_GreenFluffyBites.Models;
+@model List<Blog_GreenFluffyBites.Models.Article>
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+
+<div class="container">
+    <div class="coll-sm-4">
+        <div class="container">
+            <div class="well">
+                @using (var database = new BlogDBContext())
+                {
+                    var author = database.Users.Where(u => u.UserName == this.User.Identity.Name).First();
+
+                    <p>@author.FullName</p>
+                    <p>@author.Email</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="coll-sm-8">
+        <div class="row">
+            @foreach (var article in Model)
+            {
+                <div class="col-sm-4">
+                    <article>
+                        <header>
+                            <h2>
+                                @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
+                            </h2>
+                        </header>
+                        <p>
+                            @article.Content
+                        </p>
+                        <footer class="pull-right">
+                            <small class="author">
+                                --author @article.Author.FullName
+                            </small>
+                        </footer>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<hr />
+
