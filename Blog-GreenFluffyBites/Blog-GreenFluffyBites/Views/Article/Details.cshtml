@@ -28,7 +28,14 @@
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
                 </div>
             <div class="pull-left">
-                @Html.ActionLink("Like", "Details", "Article", null, new { @class = "btn btn-default btn-xs" })
+                @*@Html.ActionLink("Like", "Article", "LikeArticle", new { sortOrder = ViewBag.ScoreSortParm })*@
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LikeArticle", "Article", new { @id = Model.Id }, FormMethod.Post))
+        {
+         <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-thumbs-up thumbs-up"></span> </button>
+        }
+    }
             </div>
         </footer>
     </article>

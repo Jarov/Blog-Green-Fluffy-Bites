@@ -28,7 +28,8 @@ namespace Blog_GreenFluffyBites.Models
 
         public DateTime DatePosted { get; set; }
 
-        public List<string> UsersLikesIDs { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        public string UsersLikesIDs { get; set; }
 
         public bool IsAuthor(string name)
         {

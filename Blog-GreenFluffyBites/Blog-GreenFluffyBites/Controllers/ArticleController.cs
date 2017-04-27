@@ -77,11 +77,11 @@ namespace Blog_GreenFluffyBites.Controllers
 
                     article.AuthorId = authorId;
 
+                    article.UsersLikesIDs = "";
                     
                     article.DatePosted = new DateTime();
                     article.DatePosted = DateTime.Now;
 
-                    article.UsersLikesIDs = new List<string>();
                     article.Score = 0;
 
                     database.Articles.Add(article);
@@ -228,7 +228,6 @@ namespace Blog_GreenFluffyBites.Controllers
             }
 
 
-
             using (var database = new BlogDBContext())
             {
                 var currentUserID = database.Users.First(u => u.UserName == this.User.Identity.Name).Id;
@@ -236,15 +235,15 @@ namespace Blog_GreenFluffyBites.Controllers
                 var currentPostID = database.Articles.First(p => p.Id == id);
 
                 if (!currentPostID.UsersLikesIDs.Contains(currentUserID))
-                { }
-                    currentPostID.UsersLikesIDs.Add(currentUserID);
+                {
+                    currentPostID.UsersLikesIDs += currentUserID;
                     currentPostID.Score += 1;
 
                     database.Entry(currentPostID).State = EntityState.Modified;
                     database.SaveChanges();
 
                     this.AddNotification("Post liked!", NotificationType.SUCCESS);
-                
+                }
 
                 return RedirectToAction("List");
 
