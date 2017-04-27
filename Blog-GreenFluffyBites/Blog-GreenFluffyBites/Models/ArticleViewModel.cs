@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Blog_GreenFluffyBites.Models
@@ -10,10 +11,14 @@ namespace Blog_GreenFluffyBites.Models
         [Required]
         [StringLength(55)]
         public string Title { get; set; }
+
         [Required]
+        [DisplayName("Article")]
         [StringLength(300)]
         public string Content { get; set; }
 
         public string AuthorId { get; set; }
+
+        public int Score { get; set; }
     }
 }

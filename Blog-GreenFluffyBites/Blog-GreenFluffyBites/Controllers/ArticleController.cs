@@ -45,6 +45,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 var article = database.Articles
                     .Where(a => a.Id == id)
                     .Include(a => a.Author)
+                    .Include(p => p.Comments.Select(c => c.Author))
                     .First();
 
                 if (article == null)
@@ -281,19 +282,19 @@ namespace Blog_GreenFluffyBites.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new BlogDBContext())
+                using (var database = new BlogDBContext())
                 {
                     var username = this.User.Identity.GetUserName();
                     var userId = this.User.Identity.GetUserId();
 
-                    db.Comments.Add(new Comment()
+                    database.Comments.Add(new Comment()
                     {
                         AuthorId = userId,
                         Content = commentModel.Content,
                         ArticleId = commentModel.ArticleId,
                     });
 
-                    db.SaveChanges();
+                    database.SaveChanges();
 
                     return RedirectToAction("Details", new { id = commentModel.ArticleId });
                 }

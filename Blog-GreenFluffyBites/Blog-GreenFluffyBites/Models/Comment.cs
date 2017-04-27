@@ -1,5 +1,4 @@
-﻿using Blog_GreenFluffyBites.Models;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Blog_GreenFluffyBites.Models
@@ -8,9 +7,7 @@ namespace Blog_GreenFluffyBites.Models
     {
         public Comment()
         {
-
             UsersLikesIDs = String.Empty;
-
         }
 
         [Key]
@@ -26,8 +23,7 @@ namespace Blog_GreenFluffyBites.Models
         public virtual ApplicationUser Author { get; set; }
 
         public string AuthorId { get; set; }
-
-
+        
         public int Score { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]

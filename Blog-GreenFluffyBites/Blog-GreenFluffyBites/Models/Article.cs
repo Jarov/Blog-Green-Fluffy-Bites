@@ -9,6 +9,19 @@ namespace Blog_GreenFluffyBites.Models
     {
         private ICollection<Comment> comments;
 
+        public Article()
+        {
+            Comments = new HashSet<Comment>();
+        }
+        public Article(string authorID, string title, string content)
+        {
+            this.AuthorId = authorID;
+            this.Title = title;
+            this.Content = content;
+            this.comments = new HashSet<Comment>();
+            UsersLikesIDs = String.Empty;
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -33,6 +46,7 @@ namespace Blog_GreenFluffyBites.Models
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string UsersLikesIDs { get; set; }
+
         public virtual ICollection<Comment> Comments
         {
             get { return this.comments; }
