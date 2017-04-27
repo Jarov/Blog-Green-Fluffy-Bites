@@ -1,5 +1,4 @@
 ﻿using Blog_GreenFluffyBites.Models;
-using Notification.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Blog_GreenFluffyBites.Extensions;
 
 namespace Blog_GreenFluffyBites.Controllers
 {
@@ -105,12 +105,13 @@ namespace Blog_GreenFluffyBites.Controllers
                     database.Articles.Add(article);
                     database.SaveChanges();
 
+                    this.AddNotification("Article created", NotificationType.SUCCESS);
 
                     return RedirectToAction("Index");
                 }
 
             }
-
+            
 
             return View(article);
         }
@@ -141,7 +142,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 {
                     return HttpNotFound();
                 }
-
+                this.AddNotification("Article will be deleted.", NotificationType.WARNING);
                 return View(article);
             }
         }
@@ -167,6 +168,8 @@ namespace Blog_GreenFluffyBites.Controllers
 
                 database.Articles.Remove(article);
                 database.SaveChanges();
+
+                this.AddNotification("Article deleted", NotificationType.SUCCESS);
 
                 return RedirectToAction("Index");
             }
@@ -221,6 +224,8 @@ namespace Blog_GreenFluffyBites.Controllers
                     database.Entry(article).State = EntityState.Modified;
                     database.SaveChanges();
 
+                    this.AddNotification("Article edited", NotificationType.SUCCESS);
+
                     return RedirectToAction("Details", new { id = article.Id });
                 }
             }
@@ -263,7 +268,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     this.AddNotification("Post liked!", NotificationType.SUCCESS);
                 }
 
-                return RedirectToAction("List");
+                return RedirectToAction($"Details/{id}");
 
             }
 

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Notification.Extensions
+namespace Blog_GreenFluffyBites.Extensions
 {
     /*                                                                      *
      *      This extension was derive from Brad Christie's answer           *
@@ -19,7 +19,7 @@ namespace Notification.Extensions
     {
         private static IDictionary<String, String> NotificationKey = new Dictionary<String, String>
         {
-            { "Error",      "App.Notifications.Error" },
+            { "Error",      "App.Notifications.Error" }, 
             { "Warning",    "App.Notifications.Warning" },
             { "Success",    "App.Notifications.Success" },
             { "Info",       "App.Notifications.Info" }
