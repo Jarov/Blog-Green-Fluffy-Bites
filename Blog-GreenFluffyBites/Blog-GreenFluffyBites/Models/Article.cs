@@ -26,6 +26,8 @@ namespace Blog_GreenFluffyBites.Models
 
         public int Score { get; set; }
 
+        public string ImagePath { get; set; }
+
         public DateTime DatePosted { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]

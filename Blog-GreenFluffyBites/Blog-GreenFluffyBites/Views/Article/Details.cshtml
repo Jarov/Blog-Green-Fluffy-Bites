@@ -15,6 +15,12 @@
         <p>
             @Model.Content
         </p>
+
+        @if (Model.ImagePath != null)
+        {
+            <img src="@Model.ImagePath" alt="Article Imgae" width="425px" />
+        }
+
         <small class="author">
             --author @Model.Author.FullName
         </small>

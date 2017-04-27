@@ -61,28 +61,46 @@ namespace Blog_GreenFluffyBites.Controllers
         {
             return View();       
         }
-       
+
         // POST: Article Create
         [HttpPost]
         [Authorize]
-        public ActionResult Create(Article article)
+        public ActionResult Create(Article article, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
                 // Insert article in DB
 
-            using (var database = new BlogDBContext())
+                using (var database = new BlogDBContext())
                 {
                     var authorId = database.Users.Where(u => u.UserName == this.User.Identity.Name).First().Id;
 
                     article.AuthorId = authorId;
 
                     article.UsersLikesIDs = "";
-                    
+
                     article.DatePosted = new DateTime();
                     article.DatePosted = DateTime.Now;
 
                     article.Score = 0;
+
+                    if (image != null)
+                    {
+                        var allowedContentTypes = new[] { "image/jpg", "image/jpeg", "image/png" };
+
+                        if (allowedContentTypes.Contains(image.ContentType))
+                        {
+                            var imagesPath = "/Content/Images";
+
+                            var filename = image.FileName;
+
+                            var uploadPath = imagesPath + filename;
+                            var physicalPath = Server.MapPath(uploadPath);
+                            image.SaveAs(physicalPath);
+
+                            article.ImagePath = uploadPath;
+                        }
+                    }
 
                     database.Articles.Add(article);
                     database.SaveChanges();
@@ -90,7 +108,7 @@ namespace Blog_GreenFluffyBites.Controllers
 
                     return RedirectToAction("Index");
                 }
-              
+
             }
 
 
