@@ -12,6 +12,8 @@ namespace Blog_GreenFluffyBites.Models
 
         public virtual IDbSet<Article> Articles { get; set; }
 
+        public virtual IDbSet<Comment> Comments { get; set; }
+
         public static BlogDBContext Create()
         {
             return new BlogDBContext();

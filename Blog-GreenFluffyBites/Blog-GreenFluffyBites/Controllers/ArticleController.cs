@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Blog_GreenFluffyBites.Extensions;
+using Microsoft.AspNet.Identity;
 
 namespace Blog_GreenFluffyBites.Controllers
 {
@@ -271,6 +272,34 @@ namespace Blog_GreenFluffyBites.Controllers
                 return RedirectToAction($"Details/{id}");
 
             }
+
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult PostComment(CommentViewModel commentModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new BlogDBContext())
+                {
+                    var username = this.User.Identity.GetUserName();
+                    var userId = this.User.Identity.GetUserId();
+
+                    db.Comments.Add(new Comment()
+                    {
+                        AuthorId = userId,
+                        Content = commentModel.Content,
+                        ArticleId = commentModel.ArticleId,
+                    });
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = commentModel.ArticleId });
+                }
+            }
+
+            return RedirectToAction("Details", new { id = commentModel.ArticleId });
 
         }
 

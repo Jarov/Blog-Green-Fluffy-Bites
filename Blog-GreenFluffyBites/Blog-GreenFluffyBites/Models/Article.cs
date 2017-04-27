@@ -7,6 +7,7 @@ namespace Blog_GreenFluffyBites.Models
 {
     public class Article
     {
+        private ICollection<Comment> comments;
 
         [Key]
         public int Id { get; set; }
@@ -32,6 +33,11 @@ namespace Blog_GreenFluffyBites.Models
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string UsersLikesIDs { get; set; }
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
+        }
 
         public bool IsAuthor(string name)
         {

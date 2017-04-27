@@ -1,5 +1,7 @@
 ﻿using Blog_GreenFluffyBites.Migrations;
 using Blog_GreenFluffyBites.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System.Data.Entity;
@@ -15,5 +17,6 @@ namespace Blog_GreenFluffyBites
 
             ConfigureAuth(app);
         }
+
     }
 }

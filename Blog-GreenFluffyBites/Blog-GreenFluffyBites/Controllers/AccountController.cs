@@ -18,9 +18,14 @@ namespace Blog_GreenFluffyBites.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+
+        BlogDBContext context;
         public AccountController()
         {
+         
         }
+
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -139,6 +144,7 @@ namespace Blog_GreenFluffyBites.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
             return View();
         }
 
