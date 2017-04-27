@@ -28,7 +28,7 @@ namespace Blog_GreenFluffyBites.Controllers
         [HttpGet]
         public ActionResult ChangeProfilePicture()
         {
-            return RedirectToAction("ChangePicture","Profile");
+            return View();
         }
 
         //POST 

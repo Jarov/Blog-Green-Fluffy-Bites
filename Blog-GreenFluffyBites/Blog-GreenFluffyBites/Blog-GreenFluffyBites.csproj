@@ -268,7 +268,7 @@
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Shared\_Notifications.cshtml" />
-    <Content Include="Views\Profile\ChangePicture.cshtml" />
+    <Content Include="Views\Manage\ChangeProfilePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
