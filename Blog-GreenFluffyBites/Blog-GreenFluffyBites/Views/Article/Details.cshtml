@@ -7,23 +7,48 @@
 
 <div class="container">
     <article>
-        <header>
-            <h2>
-                @Model.Title
-            </h2>
-        </header>
-        <p>
-            @Model.Content
-        </p>
-
-        @if (Model.ImagePath != null)
-        {
-            <img src="@Model.ImagePath" alt="Article Imgae" width="425px" />
-        }
-
+        <div class="row" style="padding-top:20px">
+            <div class="col-sm-4">
+                <header>
+                    <h2>
+                        @Model.Title
+                    </h2>
+                </header>
+                <p>
+                    @Model.Content
+                </p>
+            </div>
+            <div class="col-sm-4">
+                @if (Model.ImagePath != null)
+                {
+                    <img src="@Model.ImagePath" alt="Article Imgae" width="256px" />
+                }
+            </div>
+        </div>
         <small class="author">
             --author @Model.Author.FullName
         </small>
+        <div class="row">
+            <div class="pull-left">
+                @*@Html.ActionLink("Like", "Article", "LikeArticle", new { sortOrder = ViewBag.ScoreSortParm })*@
+                @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LikeArticle", "Article", new { @id = Model.Id }, FormMethod.Post))
+                {
+                        <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-thumbs-up thumbs-up"></span> </button>
+                    }
+                }
+                @using (var database = new BlogDBContext())
+            {
+                var url = Request.Url.ToString().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                var ArticleID = Convert.ToInt32(url.Last());
+
+                var currentArticle = database.Articles.First(a => a.Id == ArticleID);
+
+                    <p>Score: @currentArticle.Score</p>
+                }
+            </div>
+        </div>
         <footer>
             <div class="pull-right">
             @if (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.Name))
@@ -33,25 +58,6 @@
             }
 
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
-            </div>
-            <div class="pull-left">
-                @*@Html.ActionLink("Like", "Article", "LikeArticle", new { sortOrder = ViewBag.ScoreSortParm })*@
-                @if (Request.IsAuthenticated)
-                {
-                    using (Html.BeginForm("LikeArticle", "Article", new { @id = Model.Id }, FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-thumbs-up thumbs-up"></span> </button>
-                    }
-                }
-                @using (var database = new BlogDBContext())
-                {
-                    var url = Request.Url.ToString().Split( new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                    var ArticleID = Convert.ToInt32(url.Last());
-
-                    var currentArticle = database.Articles.First(a => a.Id == ArticleID);
-
-                    <p>Score: @currentArticle.Score</p>
-                }
             </div>
         </footer>
     </article>

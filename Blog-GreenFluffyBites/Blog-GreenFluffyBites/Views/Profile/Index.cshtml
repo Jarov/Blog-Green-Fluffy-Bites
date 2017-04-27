@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Blog_GreenFluffyBites.Models;
+@using System.Data.Entity;
 @model List<Blog_GreenFluffyBites.Models.Article>
 @{
     ViewBag.Title = "Profile";
@@ -8,20 +9,32 @@
 
 
 <div class="container">
-    <div class="coll-sm-4">
-        <div class="container">
+    <div class="coll-md-4">
+        <div class="container" style="padding-top:50px">
             <div class="well">
                 @using (var database = new BlogDBContext())
                 {
                     var author = database.Users.Where(u => u.UserName == this.User.Identity.Name).First();
 
                     <p>@author.FullName</p>
+                    var articles = database.Articles.Include(a => a.Author).Where(a => a.Author.Id == author.Id).ToList();
+
+                    int totalArticles = 0;
+                    int totalScore = 0;
+                    foreach (var article in articles)
+                    {
+                        totalScore += article.Score;
+                        totalArticles++;
+                    }
+
                     <p>@author.Email</p>
+                    <p>Total Score: @totalScore</p>
+                    <p>Total Articles: @totalArticles</p>
                 }
             </div>
         </div>
     </div>
-    <div class="coll-sm-8">
+    <div class="coll-md-8">
         <div class="row">
             @foreach (var article in Model)
             {
