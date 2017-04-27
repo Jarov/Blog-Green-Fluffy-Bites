@@ -12,6 +12,7 @@
     <div class="coll-md-4">
         <div class="container" style="padding-top:50px">
             <div class="well">
+                @Html.ActionLink("Change your profile picture!", "ChangePicture", "Profile")
                 @using (var database = new BlogDBContext())
                 {
                     var author = database.Users.Where(u => u.UserName == this.User.Identity.Name).First();
