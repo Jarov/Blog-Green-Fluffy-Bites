@@ -15,7 +15,6 @@ namespace Blog_GreenFluffyBites.Models
 
         [Required]
         [DisplayName("Article")]
-        [StringLength(300)]
         public string Content { get; set; }
 
         [ForeignKey("Category")]

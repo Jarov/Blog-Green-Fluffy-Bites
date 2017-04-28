@@ -33,7 +33,6 @@ namespace Blog_GreenFluffyBites.Models
         public string Title { get; set; }
         
         [Required]
-        [StringLength(300)]
         public string Content { get; set; }
 
         [ForeignKey("Author")]
