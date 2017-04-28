@@ -13,21 +13,10 @@ namespace Blog_GreenFluffyBites.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+
+            ContextKey = "Blog_GreenFluffyBites.Models.BlogDBContext";
         }
-        protected override void Seed(Blog_GreenFluffyBites.Models.BlogDBContext context)
-        {
-           /* var adminEmail = "admin@admin.com";
-            var adminFullName = "Admin";
-            var adminPassword = "1234";
-            string adminRole = "Administrator";
-
-            CreateAdminUser(context, adminEmail, adminFullName, adminPassword, adminRole); */
-        }
-
-
-            /* ContextKey = "Blog_GreenFluffyBites.Models.BlogDBContext";
-         }
-
+               
          protected override void Seed(Blog_GreenFluffyBites.Models.BlogDBContext context)
          {
 
@@ -74,7 +63,6 @@ namespace Blog_GreenFluffyBites.Migrations
 
              }
 
-
          }
 
          private void CreateUser(string email, string fullName, string password, BlogDBContext context)
@@ -103,7 +91,7 @@ namespace Blog_GreenFluffyBites.Migrations
              {
                  throw new Exception(string.Join(";", result.Errors));
              }
-         } */
+         } 
         }
 }
 
