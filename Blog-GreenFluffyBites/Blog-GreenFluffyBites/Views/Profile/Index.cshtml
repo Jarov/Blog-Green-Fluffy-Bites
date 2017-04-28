@@ -56,12 +56,14 @@
                                 @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
                             </h2>
                         </header>
-                        <p>
-                            @article.Content
-                        </p>
-                        <footer class="pull-right">
+                        <footer class="text-center">
                             <small class="author">
-                                --author @article.Author.FullName
+                                @using (var database = new BlogDBContext())
+                                {
+                                    var author = database.Users.Where(u => u.Id == article.AuthorId).First();
+
+                                    <p>submitted by @author.FullName , score @article.Score</p>
+                                }
                             </small>
                         </footer>
                     </article>

@@ -1,4 +1,5 @@
-﻿using Blog_GreenFluffyBites.Models;
+﻿using Blog_GreenFluffyBites.Extensions;
+using Blog_GreenFluffyBites.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -50,6 +51,8 @@ namespace Blog_GreenFluffyBites.Controllers.Admin
                 }
             }
 
+            this.AddNotification("You have created the Category!", NotificationType.SUCCESS);
+
             return View(category);
         }
 
@@ -73,6 +76,7 @@ namespace Blog_GreenFluffyBites.Controllers.Admin
                     return HttpNotFound();
                 }
 
+                this.AddNotification("You are about to edit the Category!", NotificationType.WARNING);
 
                 return View(category);
             }
@@ -92,6 +96,7 @@ namespace Blog_GreenFluffyBites.Controllers.Admin
                     database.Entry(category).State = EntityState.Modified;
                     database.SaveChanges();
 
+                    this.AddNotification("You have edited the Category!", NotificationType.SUCCESS);
 
                     return RedirectToAction("Index");
                 }
@@ -117,6 +122,8 @@ namespace Blog_GreenFluffyBites.Controllers.Admin
                 {
                     return HttpNotFound();
                 }
+
+                this.AddNotification("You are about to delete the Category!", NotificationType.WARNING);
 
                 return View(category);
             }
@@ -147,6 +154,7 @@ namespace Blog_GreenFluffyBites.Controllers.Admin
                 database.Categories.Remove(category);
                 database.SaveChanges();
 
+                this.AddNotification("You have deleted the Category!", NotificationType.SUCCESS);
 
                 return RedirectToAction("Index");
             }

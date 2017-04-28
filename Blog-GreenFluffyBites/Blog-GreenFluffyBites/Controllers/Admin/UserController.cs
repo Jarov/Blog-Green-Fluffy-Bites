@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Blog_GreenFluffyBites.Models;
 using Blog_GreenFluffyBites;
+using Blog_GreenFluffyBites.Extensions;
 
 namespace Softuni_Project.Controllers.Admin
 {
@@ -85,6 +86,7 @@ namespace Softuni_Project.Controllers.Admin
                 viewModel.User = user;
                 viewModel.Roles = GetUserRoles(user, db);
 
+                this.AddNotification("You are about to edit the user!", NotificationType.WARNING);
 
                 return View(viewModel);
 
@@ -154,6 +156,8 @@ namespace Softuni_Project.Controllers.Admin
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
+                    this.AddNotification("You have edited the user!", NotificationType.SUCCESS);
+
                     return RedirectToAction("List");
                 }
 
@@ -203,6 +207,7 @@ namespace Softuni_Project.Controllers.Admin
                     return HttpNotFound();
                 }
 
+                this.AddNotification("You are about to delete the user!", NotificationType.WARNING);
 
                 return View(user);
             }
@@ -239,6 +244,8 @@ namespace Softuni_Project.Controllers.Admin
 
                 db.Users.Remove(user);
                 db.SaveChanges();
+
+                this.AddNotification("You have deleted the user!", NotificationType.SUCCESS);
 
                 return RedirectToAction("List");
             }
