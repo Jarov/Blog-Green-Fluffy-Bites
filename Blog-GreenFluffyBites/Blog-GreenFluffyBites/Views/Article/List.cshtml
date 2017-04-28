@@ -1,14 +1,17 @@
 ﻿@model List<Blog_GreenFluffyBites.Models.Article>
+@using Blog_GreenFluffyBites.Models;
+@using System.Linq;
 @{
     ViewBag.Title = "List";
 }
-@Styles.Render("~/Content/ListAllIndex.css")
+
 <div class="container">
     <div class="row" style="margin-top:15px;">
         <div class="col-sm-offset-3 col-sm-9 text-center" id="sortBy">
-            @Html.ActionLink("Title", "List", new { sortOrder = ViewBag.TitleSortParm })
-            @Html.ActionLink("Score", "List", new { sortOrder = ViewBag.ScoreSortParm })
-            @Html.ActionLink("Date Posted", "List", new { sortOrder = ViewBag.DateSortParm })
+            [@Html.ActionLink("All", "Index", "Home", new { area = "" })]
+            [@Html.ActionLink("Title", "List", new { sortOrder = ViewBag.TitleSortParm })]
+            [@Html.ActionLink("Score", "List", new { sortOrder = ViewBag.ScoreSortParm })]
+            [@Html.ActionLink("Date Posted", "List", new { sortOrder = ViewBag.DateSortParm })]
         </div>
     </div>
     <hr />
@@ -39,7 +42,12 @@
                             </h2>
                         </header>
                         <footer class="pull-left col-sm-12">
-                            <p>submitted by @post.Author.FullName , score @post.Score</p>
+                            @using (var database = new BlogDBContext())
+                            {
+                                var author = database.Users.Where(u => u.Id == @post.AuthorId).First();
+
+                                <p>submitted by @author.FullName , score @post.Score</p>
+                            }
                         </footer>
                     </article>                 
                 </div>

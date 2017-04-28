@@ -162,9 +162,9 @@ namespace Blog_GreenFluffyBites.Controllers
 
                 using (var database = new BlogDBContext())
                 {
-                    var author = database.Users.Where(u => u.UserName == this.User.Identity.Name).First();                  
-                    var textPost = new Article(author.Id, article.Title, article.Content, article.CategoryId);
+                    var authorId = database.Users.Where(u => u.UserName == this.User.Identity.Name).First().Id;
 
+                    article.AuthorId = authorId;
                     article.UsersLikesIDs = "";
                     article.DatePosted = new DateTime();
                     article.DatePosted = DateTime.Now;               
@@ -176,7 +176,7 @@ namespace Blog_GreenFluffyBites.Controllers
 
                         if (allowedContentTypes.Contains(image.ContentType))
                         {
-                            var imagesPath = "/Content/Images";
+                            var imagesPath = "/Content";
 
                             var filename = image.FileName;
 
