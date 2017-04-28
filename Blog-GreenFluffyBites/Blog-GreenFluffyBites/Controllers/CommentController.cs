@@ -34,7 +34,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 {
                     return HttpNotFound();
                 }
-
+                this.AddNotification("Comment will be edited.", NotificationType.WARNING);
                 var model = new CommentViewModel();
                 model.Id = comment.Id;
                 model.Content = comment.Content;
@@ -59,7 +59,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     comment.Content = model.Content;
                     database.Entry(comment).State = EntityState.Modified;
                     database.SaveChanges();
-                    this.AddNotification("Comment edited.", NotificationType.INFO);
+                    this.AddNotification("Comment edited.", NotificationType.SUCCESS);
 
                     return RedirectToAction("Details", "Article", new { id = comment.ArticleId });
                 }
@@ -84,6 +84,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 {
                     return HttpNotFound();
                 }
+                this.AddNotification("Comment will be deleted.", NotificationType.WARNING);
                 return View(comment);
             }
         }
@@ -109,7 +110,7 @@ namespace Blog_GreenFluffyBites.Controllers
 
                 database.Comments.Remove(comment);
                 database.SaveChanges();
-                this.AddNotification("Comment deleted.", NotificationType.INFO);
+                this.AddNotification("Comment deleted.", NotificationType.SUCCESS);
 
                 return RedirectToAction("Details", "Article", new { id = comment.ArticleId });
 
@@ -139,7 +140,6 @@ namespace Blog_GreenFluffyBites.Controllers
                     currentCommentID.Score += 1;
                     db.SaveChanges();
                     this.AddNotification("Comment liked!", NotificationType.SUCCESS);
-
                 }
                 return RedirectToAction("Details", "Article", new { id = TextPostId });
             }
