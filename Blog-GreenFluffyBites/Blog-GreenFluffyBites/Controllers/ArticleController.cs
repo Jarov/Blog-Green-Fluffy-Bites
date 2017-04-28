@@ -200,7 +200,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 {
                     return HttpNotFound();
                 }
-
+                this.AddNotification("Article will be edited.", NotificationType.WARNING);
                 var model = new ArticleViewModel();
                 model.Id = article.Id;
                 model.Title = article.Title;
