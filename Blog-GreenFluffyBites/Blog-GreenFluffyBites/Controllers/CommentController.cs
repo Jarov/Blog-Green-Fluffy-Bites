@@ -61,7 +61,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     database.SaveChanges();
                     this.AddNotification("Comment edited.", NotificationType.INFO);
 
-                    return RedirectToAction("Details", "TextPost", new { id = comment.ArticleId });
+                    return RedirectToAction("Details", "Article", new { id = comment.ArticleId });
                 }
             }
             return View(model);
@@ -111,7 +111,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 database.SaveChanges();
                 this.AddNotification("Comment deleted.", NotificationType.INFO);
 
-                return RedirectToAction("Details", "TextPost", new { id = comment.ArticleId });
+                return RedirectToAction("Details", "Article", new { id = comment.ArticleId });
 
             }
         }
@@ -141,7 +141,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     this.AddNotification("Comment liked!", NotificationType.SUCCESS);
 
                 }
-                return RedirectToAction("Details", "TextPost", new { id = TextPostId });
+                return RedirectToAction("Details", "Article", new { id = TextPostId });
             }
 
 
