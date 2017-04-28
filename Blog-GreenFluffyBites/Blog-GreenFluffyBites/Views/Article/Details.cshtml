@@ -51,22 +51,27 @@
             @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
             </div>
         </footer>
+        <hr style="margin-top:50px" />
     </article>
     <!-- Comments Form -->
     @if (User.Identity.IsAuthenticated)
     {
-        <div class="row">
-            <div class="col-sm-3">
-                <h2 class="blueHeading">Comment here:</h2>
-            </div>
-            <div class="col-sm-7">
-                @using (Ajax.BeginForm("PostComment", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "Comments", OnFailure = "commentPostFailure" }))
-                {
-                    @Html.Hidden("ArticleId", Model.Id)
-                    @Html.TextArea("Content", "")
-                    @Html.AntiForgeryToken()
-                    <div class="col-sm-offset-5"><input type="submit" value="Comment" class="btn btn-default commentButton text-center" /></div>
-                }
+        <div class="well">
+            <div class="row">
+                    <div class="col-sm-3">
+                        <h2 style="margin-top:36px;">Comment here:</h2>
+                    </div>
+                    <div class="form-group">
+                        @using (Ajax.BeginForm("PostComment", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "Comments", OnFailure = "commentPostFailure" }))
+                        {
+                            @Html.Hidden("ArticleId", Model.Id)
+                            <div class="col-sm-6">
+                                @Html.TextArea("Content", new { @class = "form-control", @style = "max-width:1000px; width:100%", @rows = "5" })
+                            </div>
+                            @Html.AntiForgeryToken()
+                            <div class="col-sm-3" style="margin-top:40px;"><input type="submit" value="Comment" class="btn btn-default commentButton text-center" /></div>
+                        }
+                    </div>
             </div>
         </div>
     }
