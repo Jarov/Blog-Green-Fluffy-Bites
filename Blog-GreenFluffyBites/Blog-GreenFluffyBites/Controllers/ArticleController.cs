@@ -21,14 +21,87 @@ namespace Blog_GreenFluffyBites.Controllers
         }
 
         // GET: Article/List
-        public ActionResult List()
+        public ActionResult List(string sortOrder, int? id)
         {
-            using (var database = new BlogDBContext()) {
 
-                var articles = database.Articles.Include(a => a.Author).ToList();
+            ViewBag.TitleSortParm = "name_order";
+            ViewBag.ScoreSortParm = "score_order";
+            ViewBag.DateSortParm = "new_posts_first";
+            using (var db = new BlogDBContext())
+            {
+                var posts = db.Articles.
+                     Include(a => a.Author);
 
-                return View(articles);
+                switch (sortOrder)
+                {
+
+                    case "new_posts_first":
+                        posts = posts.OrderByDescending(s => s.DatePosted);
+
+                        break;
+                    case "name_order":
+                        posts = posts.OrderBy(s => s.Title);
+                        break;
+
+                    case "score_order":
+                        posts = posts.OrderByDescending(s => s.Score);
+                        break;
+                    default:
+                        posts = posts.OrderBy(s => s.DatePosted);
+                        break;
+                }
+
+
+                var dbCategories = db.Categories.ToList();
+                Dictionary<int, string> categories = new Dictionary<int, string>();
+
+                foreach (var category in dbCategories)
+                {
+                    categories[category.Id] = category.Name;
+
+                }
+
+                ViewBag.Categories = categories;
+
+                if (id != null)
+                {
+                    //The user clicked on a category, show only the posts in the same one
+
+                    var categoryPosts = db.Articles.Where(t => t.CategoryId == id).Include(a => a.Author);
+
+                    ViewBag.TitleSortParm = "name_order";
+                    ViewBag.ScoreSortParm = "score_order";
+                    ViewBag.DateSortParm = "new_posts_first";
+
+                    switch (sortOrder)
+                    {
+
+                        case "new_posts_first":
+                            categoryPosts = categoryPosts.OrderByDescending(s => s.DatePosted);
+
+                            break;
+                        case "name_order":
+                            categoryPosts = categoryPosts.OrderBy(s => s.Title);
+                            break;
+
+                        case "score_order":
+                            categoryPosts = categoryPosts.OrderByDescending(s => s.Score);
+                            break;
+                        default:
+                            categoryPosts = categoryPosts.OrderBy(s => s.DatePosted);
+                            break;
+                    }
+
+
+
+                    return View(categoryPosts.ToList());
+                }
+
+
+                return View(posts.ToList());
+
             }
+
         }
 
         // GET: Article/Details
@@ -61,7 +134,21 @@ namespace Blog_GreenFluffyBites.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            return View();       
+            //check if we have error messages from our last attempt to create a post
+            if (TempData["message"] != null)
+            {
+                ViewBag.Message = TempData["message"].ToString();
+            }
+
+
+            using (var databse = new BlogDBContext())
+            {
+                var model = new ArticleViewModel();
+                model.Categories = databse.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
+                return View(model);
+            }
         }
 
         // POST: Article Create
@@ -75,15 +162,12 @@ namespace Blog_GreenFluffyBites.Controllers
 
                 using (var database = new BlogDBContext())
                 {
-                    var authorId = database.Users.Where(u => u.UserName == this.User.Identity.Name).First().Id;
-
-                    article.AuthorId = authorId;
+                    var author = database.Users.Where(u => u.UserName == this.User.Identity.Name).First();                  
+                    var textPost = new Article(author.Id, article.Title, article.Content, article.CategoryId);
 
                     article.UsersLikesIDs = "";
-
                     article.DatePosted = new DateTime();
-                    article.DatePosted = DateTime.Now;
-
+                    article.DatePosted = DateTime.Now;               
                     article.Score = 0;
 
                     if (image != null)
@@ -133,6 +217,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 var article = database.Articles
                     .Where(a => a.Id == id)
                     .Include(a => a.Author)
+                    .Include(c => c.Category)
                     .First();
 
                 if (!IsUserAuthorizedToEdit(article))
@@ -205,6 +290,8 @@ namespace Blog_GreenFluffyBites.Controllers
                 model.Id = article.Id;
                 model.Title = article.Title;
                 model.Content = article.Content;
+                model.CategoryId = article.CategoryId;
+                model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
                 return View(model);
             }
         }
@@ -222,7 +309,8 @@ namespace Blog_GreenFluffyBites.Controllers
 
                     article.Title = model.Title;
                     article.Content = model.Content;
-
+                    article.CategoryId = model.CategoryId;
+                    
                     database.Entry(article).State = EntityState.Modified;
                     database.SaveChanges();
 

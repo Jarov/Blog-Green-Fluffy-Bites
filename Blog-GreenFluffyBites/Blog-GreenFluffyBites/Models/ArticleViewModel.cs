@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace Blog_GreenFluffyBites.Models
 {
@@ -16,6 +17,13 @@ namespace Blog_GreenFluffyBites.Models
         [DisplayName("Article")]
         [StringLength(300)]
         public string Content { get; set; }
+
+        [ForeignKey("Category")]
+        [DisplayName("Category")]
+        [Required]
+        public int CategoryId { get; set; }
+
+        public List<Category> Categories { get; set; }
 
         public string AuthorId { get; set; }
 

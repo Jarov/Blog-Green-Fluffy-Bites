@@ -1,31 +1,50 @@
 ﻿@model List<Blog_GreenFluffyBites.Models.Article>
-
 @{
     ViewBag.Title = "List";
 }
-
+@Styles.Render("~/Content/ListAllIndex.css")
 <div class="container">
+    <div class="row" style="margin-top:15px;">
+        <div class="col-sm-offset-3 col-sm-9 text-center" id="sortBy">
+            @Html.ActionLink("Title", "List", new { sortOrder = ViewBag.TitleSortParm })
+            @Html.ActionLink("Score", "List", new { sortOrder = ViewBag.ScoreSortParm })
+            @Html.ActionLink("Date Posted", "List", new { sortOrder = ViewBag.DateSortParm })
+        </div>
+    </div>
+    <hr />
     <div class="row">
-        @foreach (var article in Model)
-        {
-            <div class="col-sm-4">
-                <article>
-                    <header>
-                        <h2>
-                            @Html.ActionLink(@article.Title, "Details", "Article", new { @id = article.Id }, null)
-                        </h2>
-                    </header>
-                    <p>
-                        @article.Content
-                    </p>
-                    <footer class="pull-right">
-                        <small class="author">
-                            --author @article.Author.FullName
-                        </small>
-                    </footer>
-                </article>
-            </div>
-        }
+        <div class="col-sm-3" id="categoriesList">
+            <h3 class="categoriesHeading text-center">Categories:</h3>
+
+            @foreach (var c in ViewBag.Categories)
+            {
+                <div class="alert alert-info">
+
+                    @{
+                        string categoryName = c.Value;
+                        @Html.ActionLink(categoryName, "List", "Article", new { @id = c.Key }, null);
+                    }
+
+                </div>
+                        }
+        </div>
+        <div class="col-sm-9" id="allPosts">
+            @foreach (var post in Model)
+            {
+                <div class="col-sm-12 text-center currentPost">
+                    <article>
+                        <header>
+                            <h2>
+                                @Html.ActionLink(@post.Title, "Details", "Article", new { @id = post.Id }, null)
+                            </h2>
+                        </header>
+                        <footer class="pull-left col-sm-12">
+                            <p>submitted by @post.Author.FullName , score @post.Score</p>
+                        </footer>
+                    </article>                 
+                </div>
+                <hr />
+            }
+        </div>
     </div>
 </div>
-<hr />

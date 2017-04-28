@@ -11,14 +11,17 @@ namespace Blog_GreenFluffyBites.Models
 
         public Article()
         {
+            DatePosted = DateTime.Now;
+            UsersLikesIDs = string.Empty;
             Comments = new HashSet<Comment>();
         }
-        public Article(string authorID, string title, string content)
+        public Article(string authorID, string title, string content, int categoryId)
         {
             this.AuthorId = authorID;
             this.Title = title;
             this.Content = content;
             this.comments = new HashSet<Comment>();
+            this.CategoryId = categoryId;
             UsersLikesIDs = String.Empty;
         }
 
@@ -52,6 +55,11 @@ namespace Blog_GreenFluffyBites.Models
             get { return this.comments; }
             set { this.comments = value; }
         }
+
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
 
         public bool IsAuthor(string name)
         {
