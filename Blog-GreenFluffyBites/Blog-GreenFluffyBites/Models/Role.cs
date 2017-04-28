@@ -1,5 +1,5 @@
 ﻿
-namespace Softuni_Project.Models
+namespace Blog_GreenFluffyBites.Models
 {
     public class Role
     {

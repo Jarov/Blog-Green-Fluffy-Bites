@@ -13,10 +13,10 @@
     <fieldset class="form-horizontal">
         <legend>Comment</legend>
         <div class="control-group">
-            @Html.LabelFor(model => model.Content, new { @class = "control-label" })
+            @Html.LabelFor(model => model.content, new { @class = "control-label" })
             <div class="controls">
-                @Html.EditorFor(model => model.Content)
-                @Html.ValidationMessageFor(model => model.Content, null, new { @class = "help-inline" })
+                @Html.EditorFor(model => model.content)
+                @Html.ValidationMessageFor(model => model.content, null, new { @class = "help-inline" })
             </div>
         </div>
         <div class="form-actions no-color">

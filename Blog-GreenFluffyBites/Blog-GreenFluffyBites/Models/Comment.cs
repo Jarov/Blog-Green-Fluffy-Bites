@@ -14,7 +14,7 @@ namespace Blog_GreenFluffyBites.Models
         public int Id { get; set; }
 
         [Required]
-        public string Content { get; set; }
+        public string content { get; set; }
 
         public virtual Article Article { get; set; }
 

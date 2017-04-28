@@ -66,10 +66,12 @@
                         {
                             @Html.Hidden("ArticleId", Model.Id)
                             <div class="col-sm-6">
-                                @Html.TextArea("Content", new { @class = "form-control", @style = "max-width:1000px; width:100%", @rows = "5" })
+                                @Html.TextArea("content", null,  new { @class = "form-control", @style = "max-width:1000px; width:100%", @rows = "5" } )
                             </div>
                             @Html.AntiForgeryToken()
-                            <div class="col-sm-3" style="margin-top:40px;"><input type="submit" value="Comment" class="btn btn-default commentButton text-center" /></div>
+                            <div class="col-sm-3" style="margin-top:40px;">
+                                <input type="submit" value="Comment" class="btn btn-default text-center" />
+                            </div>
                         }
                     </div>
             </div>

@@ -1,9 +1,8 @@
-﻿using Blog_GreenFluffyBites.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Softuni_Project.Models
+namespace Blog_GreenFluffyBites.Models
 {
     public class EditUserViewModel
     {

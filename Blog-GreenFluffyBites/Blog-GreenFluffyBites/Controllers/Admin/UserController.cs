@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using Softuni_Project.Models;
 using Blog_GreenFluffyBites.Models;
 using Blog_GreenFluffyBites;
 

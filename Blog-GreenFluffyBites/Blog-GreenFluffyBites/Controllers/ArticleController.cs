@@ -290,7 +290,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     database.Comments.Add(new Comment()
                     {
                         AuthorId = userId,
-                        Content = commentModel.Content,
+                        content = commentModel.content,
                         ArticleId = commentModel.ArticleId,
                     });
 

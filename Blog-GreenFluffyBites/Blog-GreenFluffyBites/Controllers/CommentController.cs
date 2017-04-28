@@ -37,7 +37,7 @@ namespace Blog_GreenFluffyBites.Controllers
                 this.AddNotification("Comment will be edited.", NotificationType.WARNING);
                 var model = new CommentViewModel();
                 model.Id = comment.Id;
-                model.Content = comment.Content;
+                model.content = comment.content;
                 return View(comment);
             }
         }
@@ -56,7 +56,7 @@ namespace Blog_GreenFluffyBites.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
                     }
-                    comment.Content = model.Content;
+                    comment.content = model.content;
                     database.Entry(comment).State = EntityState.Modified;
                     database.SaveChanges();
                     this.AddNotification("Comment edited.", NotificationType.SUCCESS);
